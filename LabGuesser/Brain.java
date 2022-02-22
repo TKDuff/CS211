@@ -24,7 +24,7 @@ public class Brain{
 		int count  = 0;
 		String input = "00000";
 		
-		while(count < 7) {
+		while(count < 7 && !input.equals("22222")) {
 			input = guessWord(feedback(input));		//new guess called with method that takes previous uses the words feedback
 			count++;
 		} 
@@ -36,9 +36,16 @@ public class Brain{
 		//Using feedback now filter the ArrayList
 		System.out.println("\n" + dictionary.size());
 		for(int i = 0; i < 5; i++) {
-			if(feedback.charAt(i) == '0')
+			if(feedback.charAt(i) == '0') {
 				black(String.valueOf(guess.charAt(i)));		//Need to something about casting that char to string for black method, maybe store guess in array using .split
-		}
+			}
+			else if(feedback.charAt(i) == '2') {
+				green(guess.charAt(i), i);
+			}
+			else if(feedback.charAt(i) == '1') {			//Watch out for yellow
+				yellow(guess.charAt(i), i);
+			}
+			}
 		System.out.println(feedback + "\n" +guess);
 			
 		
@@ -74,16 +81,38 @@ public class Brain{
 			}
 			return ret;
 		}
-
-private static void black(String letter) {
-	int count = 0;
-	while(count != dictionary.size() && dictionary.size() > 1) {	//Need to do something about that 1 check
-		if(dictionary.get(count).contains(letter)) {
+	
+	private static void black(String letter) {
+		int count = 0;
+		while(count != dictionary.size() && dictionary.size() > 1) {	//Need to do something about that 1 check
+			if(dictionary.get(count).contains(letter)) {
 			dictionary.remove(count);
 			count--;
+			}
+			count++;
+			}
 		}
-		count++;
+	
+	private static void green(char letter, int index) {
+		int count = 0;
+		while(count != dictionary.size() && dictionary.size() > 1) {
+			if(dictionary.get(count).charAt(index) != letter) {
+				dictionary.remove(count);
+				count--;
+			}
+			count++;
+		}
 	}
+	
+	private static void yellow(char letter, int index) {
+		int count = 0;
+		while(count != dictionary.size() && dictionary.size() > 1) {
+			if(dictionary.get(count).charAt(index) == letter || !dictionary.get(count).contains(String.valueOf(letter))) { //if word contains letter at index or not contain letter at all
+				dictionary.remove(count);
+				count--;
+			}
+			count++;
+		}
 	}
-
+	
 }
