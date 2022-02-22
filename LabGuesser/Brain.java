@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Brain{
@@ -8,38 +9,44 @@ public class Brain{
 	static public ArrayList<String> dictionary = new ArrayList<String>();
 	
 	
-	static String word = "aeiou";
+	static String word = "roate";
 	static String guess = "00000";
 	
 	public static void main(String[] args) {
 		
-		/*Create dictionary array list*/
+		/*Create dictionary array list */
 		for(int i = 0; i < 15287; i++) {
 			dictionary.add(dict.getWord(i));
-		}
+		} 
+		
+		
+		
 		int count  = 0;
 		String input = "00000";
 		
 		while(count < 7) {
 			input = guessWord(feedback(input));		//new guess called with method that takes previous uses the words feedback
 			count++;
-		}
+		} 
 		
 	}
 	
 	
 	public static String guessWord(String feedback) {
 		//Using feedback now filter the ArrayList
-		//System.out.println(guess + " -----> " + feedback);
+		System.out.println("\n" + dictionary.size());
 		for(int i = 0; i < 5; i++) {
-			System.out.print(guess.charAt(i));
+			if(feedback.charAt(i) == '0')
+				black(String.valueOf(guess.charAt(i)));		//Need to something about casting that char to string for black method, maybe store guess in array using .split
 		}
-		System.out.println();
-		for(int i = 0; i < 5; i++) {
-			System.out.print(feedback.charAt(i));
-		}
-		System.out.println();
+		System.out.println(feedback + "\n" +guess);
 			
+		
+		
+		
+		
+		
+		
 		//Picking the next word to be filtered
 		guess = dictionary.get(r.nextInt(dictionary.size()));
 		System.out.println("The next word is " + guess + "\n");
@@ -47,7 +54,6 @@ public class Brain{
 		
 		
 	}
-
 	
 	
 	/*Gives feedback of guessed word*/
@@ -68,5 +74,16 @@ public class Brain{
 			}
 			return ret;
 		}
-		
+
+private static void black(String letter) {
+	int count = 0;
+	while(count != dictionary.size() && dictionary.size() > 1) {	//Need to do something about that 1 check
+		if(dictionary.get(count).contains(letter)) {
+			dictionary.remove(count);
+			count--;
+		}
+		count++;
 	}
+	}
+
+}
