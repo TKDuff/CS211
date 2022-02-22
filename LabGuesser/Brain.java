@@ -9,7 +9,7 @@ public class Brain{
 	static public ArrayList<String> dictionary = new ArrayList<String>();
 	
 	
-	static String word = "roate";
+	static String word = dict.getWord(r.nextInt(15287));
 	static String guess = "00000";
 	
 	public static void main(String[] args) {
@@ -20,15 +20,19 @@ public class Brain{
 		} 
 		
 		
-		
 		int count  = 0;
 		String input = "00000";
-		
-		while(count < 7 && !input.equals("22222")) {
+		boolean match  = false;
+		System.out.println("The word is " + word);
+		while(count < 7 && !match) {
 			input = guessWord(feedback(input));		//new guess called with method that takes previous uses the words feedback
+			match = input.equals(word);
 			count++;
 		} 
-		
+		if(match)
+			System.out.println("You got it");
+		else
+			System.out.println("You did not get it");
 	}
 	
 	
@@ -47,12 +51,7 @@ public class Brain{
 			}
 			}
 		System.out.println(feedback + "\n" +guess);
-			
-		
-		
-		
-		
-		
+					
 		
 		//Picking the next word to be filtered
 		guess = dictionary.get(r.nextInt(dictionary.size()));
