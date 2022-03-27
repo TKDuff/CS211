@@ -71,8 +71,8 @@ class Solution {
 	
 	
 	private long Secondary(long hashVal) {
-		return 5 - (hashVal % 5);				//double hash uses 5 as prime, could change
-		
+		return 9973 - (hashVal % 9973);				//double hash uses 9973 as prime, could change.
+									//larger prime mean less collision
 	}
 
 
